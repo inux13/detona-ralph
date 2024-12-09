@@ -22,21 +22,32 @@ function countDown( ) {
     state.values.currentTime--;
     state.view.timeLeft.textContent = state.values.currentTime
 
-    if (state.values.currentTime <= 0){
-        state.values.currentLives--;
-        state.view.lives.textContent = "x" + state.values.currentLives;
+    if (state.values.currentLives <= 0) {
+        clearInterval(state.actions.timerId);
+        clearInterval(state.actions.countDownTimerId);
         alert("Game Over! Seu resultado foi " + state.values.result);
-        state.values.currentTime = 10
-    
+        state.values.currentTime = 0
+        return;
     }
 
+        if (state.values.currentTime <= 0){
+            state.values.currentLives--;
+            state.view.lives.textContent = "x" + state.values.currentLives;
+            alert("Mais uma vez!");
+            state.values.currentTime = 10
+        
+        }
+    
 }
+
 
 function playSound(audioName) {
     let audio = new Audio(`./src/audios/${audioName}.m4a`);
     audio.volume = 0.2;
     audio.play();
 }
+
+
 
 function randomSquare(){
     state.view.squares.forEach((square =>{
@@ -49,6 +60,7 @@ let randomSquare = state.view.squares[randomNumber];
 randomSquare.classList.add("enemy");
 state.values.hitPosition = randomSquare.id
 }
+
 
 function addListenerHitBox() {
     state.view.squares.forEach((square) => {
