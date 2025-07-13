@@ -23,8 +23,8 @@ function countDown( ) {
     state.view.timeLeft.textContent = state.values.currentTime
 
     if (state.values.currentLives <= 0) {
-        clearInterval(state.actions.timerId);
         clearInterval(state.actions.countDownTimerId);
+        clearInterval(state.actions.timerId);
         alert("Game Over! Seu resultado foi " + state.values.result);
         state.values.currentTime = 0
         return;
@@ -33,9 +33,11 @@ function countDown( ) {
         if (state.values.currentTime <= 0){
             state.values.currentLives--;
             state.view.lives.textContent = "x" + state.values.currentLives;
-            alert("Mais uma vez!");
+            if (state.values.currentLives > 0) {
+                alert("Mais uma vez!");
             state.values.currentTime = 10
-        
+            }
+            
         }
     
 }
@@ -70,8 +72,13 @@ function addListenerHitBox() {
             state.view.score.textContent = state.values.result
             state.values.hitPosition=null;
             playSound("hit");
+        } else {
+            /*state.values.result--
+            state.view.score.textContent = state.values.result*/
+            state.values.currentTime = 0
+             alert("perdeu")
+
         }
-        
        })
     })
 }
